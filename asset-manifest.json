@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/%7Bweb_project_around_react%7D/static/css/main.d4d6944b.css",
+    "main.js": "/%7Bweb_project_around_react%7D/static/js/main.0f329ba0.js",
+    "static/js/453.8d428687.chunk.js": "/%7Bweb_project_around_react%7D/static/js/453.8d428687.chunk.js",
+    "static/media/Inter-SemiBold.woff?v=3.19": "/%7Bweb_project_around_react%7D/static/media/Inter-SemiBold.cca62d21c8c555c392e5.woff",
+    "static/media/Inter-Black.woff?v=3.19": "/%7Bweb_project_around_react%7D/static/media/Inter-Black.c6938660eec019fefd68.woff",
+    "static/media/Inter-Regular.woff?v=3.19": "/%7Bweb_project_around_react%7D/static/media/Inter-Regular.8c206db99195777c6769.woff",
+    "static/media/Inter-Black.woff2?v=3.19": "/%7Bweb_project_around_react%7D/static/media/Inter-Black.15ca31c0a2a68f76d2d1.woff2",
+    "static/media/Inter-Regular.woff2?v=3.19": "/%7Bweb_project_around_react%7D/static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
+    "static/media/img-profile.jpg": "/%7Bweb_project_around_react%7D/static/media/img-profile.8e94371e9d2475fdfc60.jpg",
+    "static/media/logo.svg": "/%7Bweb_project_around_react%7D/static/media/logo.73a58a66de56ae53886851ca1b8f9fe4.svg",
+    "static/media/like-button.svg": "/%7Bweb_project_around_react%7D/static/media/like-button.49570bcb1d637fdb38e5.svg",
+    "index.html": "/%7Bweb_project_around_react%7D/index.html",
+    "static/media/Trash.svg": "/%7Bweb_project_around_react%7D/static/media/Trash.8cb59aa98088a1653f62.svg",
+    "static/media/like-button-active.svg": "/%7Bweb_project_around_react%7D/static/media/like-button-active.226461bd64622361ffb2.svg",
+    "static/media/close-button.svg": "/%7Bweb_project_around_react%7D/static/media/close-button.b197253711bbf0792af1a20fe56a2d9d.svg",
+    "static/media/edit-button.svg": "/%7Bweb_project_around_react%7D/static/media/edit-button.a1892ea72cb87c8fc3aa.svg",
+    "static/media/Vector.svg": "/%7Bweb_project_around_react%7D/static/media/Vector.a086f758840ae814ecdece4799d2cf40.svg",
+    "static/media/add-button.svg": "/%7Bweb_project_around_react%7D/static/media/add-button.d86bb2edc2f6eadb96b7.svg",
+    "main.d4d6944b.css.map": "/%7Bweb_project_around_react%7D/static/css/main.d4d6944b.css.map",
+    "main.0f329ba0.js.map": "/%7Bweb_project_around_react%7D/static/js/main.0f329ba0.js.map",
+    "453.8d428687.chunk.js.map": "/%7Bweb_project_around_react%7D/static/js/453.8d428687.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d4d6944b.css",
+    "static/js/main.0f329ba0.js"
+  ]
+}
