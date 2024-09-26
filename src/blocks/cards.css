@@ -1,0 +1,128 @@
+.cards__card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 350px;
+  width: 282px;
+  position: relative;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px 17px;
+  max-width: 900px;
+  margin: auto;
+  font-size: 0;
+}
+
+.cards__image {
+  width: 100%;
+  height: 75%;
+}
+
+.cards__like-icon {
+  width: 1.3rem;
+  height: 1.2rem;
+  background-image: url(../images/icon/like-button.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: 0.4s ease-in-out;
+  cursor: pointer;
+}
+.cards__like-color {
+  background: url(../images/icon/like-button-active.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: 0.4s ease-in-out;
+}
+
+.cards__delete-icon {
+  background-image: url(../images/Trash.svg);
+  width: 1.3rem;
+  position: absolute;
+  height: 1.2rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+}
+
+.cards__like {
+  display: none;
+}
+
+.cards__menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem 1.3rem 1.9rem;
+}
+
+.cards__title {
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  width: 92%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+}
+
+
+.cards__like-count {
+  font-size: 1rem;
+  margin-left: 10px;
+  color: #cf0000;
+}
+
+/* Color cuando la tarjeta tiene un "me gusta" */
+.cards__like-color {
+  color: red; /* Cambia a un color que prefieras */
+}
+
+
+@media screen and (max-width: 992px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    /* padding: 0 1.2rem; */
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .cards {
+    grid-template-columns: 1fr;
+    padding: 0 1.2rem;
+  }
+}
+
+
+
+.item {
+  background-color: #f51818;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.item_photo {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.25rem 1.06rem;
+  justify-content: space-between;
+  font-size: 0;
+}
+
+.item_info {
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  width: 92%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+}

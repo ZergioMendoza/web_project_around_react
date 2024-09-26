@@ -1,0 +1,51 @@
+.profile__edit-button
+{
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(../images/icon/edit-button.svg);
+    border: 1px solid #fff;
+    background-color: transparent;
+    cursor: pointer;
+
+}
+
+.profile__edit-button:hover
+{
+    opacity: 0.6;
+}
+
+.profile__add-button
+{
+    width: 9.375rem;
+    height: 3.125rem;
+    background: url(../images/icon/add-button.svg) no-repeat center;
+    background-color: transparent;
+    border: 2px solid #fff;
+    padding: 0;
+    position: relative;
+    left: 750px;
+    top: -80px;
+    justify-content: end;
+    margin-left: auto;
+     cursor: pointer;
+}
+
+.profile__add-button:hover
+
+{
+    opacity: 0.6;
+}
+
+
+
+@media screen and (max-width: 576px) {
+    
+      .profile__add-button {
+        margin: 0 auto;
+        width: 100%;
+      }
+      .profile__edit-button {
+        width: 1.125rem;
+        height: 1.125rem;
+      }
+    }
