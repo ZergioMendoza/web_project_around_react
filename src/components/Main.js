@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import profileLogo from '../images/img-profile.jpg';
 import vector from '../images/Vector.svg';
 import api from '../utils/Api';
-import Card from './Card'; // Importamos el componente Card
+import Card from './Card';
 
-export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick, onCardClick }) { // Asegúrate de agregar onCardClick aquí
+export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick, onCardClick }) { 
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState(profileLogo);
-  const [cards, setCards] = useState([]); // Estado para las tarjetas
+  const [cards, setCards] = useState([]); 
 
+  // Cargar la información del usuario al montar el componente
   useEffect(() => {
     api.getUserInfo()
       .then((userData) => {
@@ -20,7 +21,7 @@ export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatar
       .catch((err) => console.error(`Error obteniendo datos del usuario: ${err}`));
   }, []);
 
-  // useEffect para obtener las tarjetas de la API
+  // Cargar las tarjetas al montar el componente
   useEffect(() => {
     api.getCards()
       .then((cardsData) => {
@@ -44,9 +45,9 @@ export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatar
 
         <div className="profile__info">
           <h1 className="profile__name">{userName}</h1>
-          <button className="profile__edit-button" onClick={onEditProfileClick}></button>
+          <button className="profile__edit-button" onClick={onEditProfileClick} aria-label="Edit profile"></button>
           <p className="profile__about">{userDescription}</p>
-          <button className="profile__add-button" onClick={onAddPlaceClick}></button>
+          <button className="profile__add-button" onClick={onAddPlaceClick} aria-label="Add place"></button>
         </div>
       </section>
 
@@ -54,9 +55,9 @@ export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatar
       <section className="cards">
         {cards.map((card) => (
           <Card
-            key={card._id}
+            key={card._id} // Usa _id si es lo que te da la API, verifica el nombre del campo
             card={card}
-            onCardClick={onCardClick} // Pasamos el handler de clic a cada tarjeta
+            onCardClick={onCardClick} 
           />
         ))}
       </section>

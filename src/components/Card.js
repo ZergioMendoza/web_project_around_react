@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function Card({ card, onCardClick }) {
-  function handleClick() {
-    onCardClick(card); // Llama al handler onCardClick y pasa los datos de la tarjeta
-  }
+function Card({ card, onCardClick }) {
+  const [isLiked, setIsLiked] = useState(false); // Estado para manejar el like
+
+  const handleLikeClick = () => {
+    setIsLiked(!isLiked); // Cambia el estado de like
+  };
 
   return (
-    <article className="card">
-      <div 
-        className="card__image" 
-        style={{ backgroundImage: `url(${card.link})` }}
-        onClick={handleClick} // Maneja el clic en la imagen
+    <div className="cards__card">
+      <img 
+        src={card.link} 
+        alt={card.name} 
+        className="cards__image"
+        onClick={() => onCardClick(card)} 
       />
-      <div className="card__info">
-        <h2 className="card__title">{card.name}</h2>
-        <div className="card__like-container">
-          <button className="card__like-button" type="button"></button>
-          <span className="card__like-count">{card.likes.length}</span>
-        </div>
+      <div className="cards__menu">
+        <button 
+          className={`cards__like-icon ${isLiked ? 'cards__like-color' : ''}`} 
+          onClick={handleLikeClick}
+        />
+        <h2 className="cards__title">{card.name}</h2>
+        <p className="cards__like-count">{card.likes.length}</p>
       </div>
-    </article>
+    </div>
   );
 }
+
+export default Card;
