@@ -1,4 +1,3 @@
-// PopupWithForm.js
 import React, { useEffect } from 'react';
 
 function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children }) {

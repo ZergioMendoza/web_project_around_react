@@ -10,36 +10,16 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  
-  const [name, setName] = useState('Jacques Cousteau');
-  const [about, setAbout] = useState('Explorador');
-  const [imageUrl, setImageUrl] = useState('');
-  const [title, setTitle] = useState('');
 
-  // Definición de handleCardClick
   function handleCardClick(card) {
-    setSelectedCard(card);
+    setSelectedCard(card); // Actualiza la tarjeta seleccionada
   }
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(null);
-  }
-
-  function handleEditProfileSubmit(e) {
-    e.preventDefault();
-    // Lógica para manejar el envío del formulario de editar perfil
-    console.log('Perfil editado:', { name, about });
-    closeAllPopups();
-  }
-
-  function handleAddPlaceSubmit(e) {
-    e.preventDefault();
-    // Lógica para manejar el envío del formulario de añadir lugar
-    console.log('Nueva tarjeta:', { title, imageUrl });
-    closeAllPopups();
+    setSelectedCard(null); // Cierra el popup de la imagen
   }
 
   return (
@@ -49,79 +29,95 @@ function App() {
         onEditProfileClick={() => setIsEditProfilePopupOpen(true)}
         onAddPlaceClick={() => setIsAddPlacePopupOpen(true)}
         onEditAvatarClick={() => setIsEditAvatarPopupOpen(true)}
-        onCardClick={handleCardClick} // Asegúrate de que esta línea esté presente
+        onCardClick={handleCardClick} // Pasa la función handleCardClick a Main
       />
       <Footer />
 
-      {/* Popup de editar perfil */}
+      {/* Popup para editar el perfil */}
       <PopupWithForm
         title="Editar perfil"
         name="edit-profile"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-        onSubmit={handleEditProfileSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          // Lógica para editar perfil aquí
+          closeAllPopups();
+        }}
       >
         <input
           type="text"
-          className="popup__input popup__input-name"
           name="name"
-          value={name}
+          className="popup__input"
           placeholder="Nombre"
+          required
           minLength="2"
           maxLength="40"
-          required
-          onChange={(e) => setName(e.target.value)}
         />
-        <span className="popup__input-error input-name-error"></span>
         <input
           type="text"
-          className="popup__input popup__input-about"
           name="about"
-          value={about}
+          className="popup__input"
           placeholder="Sobre mí"
-          minLength="2"
-          maxLength="40"
           required
-          onChange={(e) => setAbout(e.target.value)}
+          minLength="2"
+          maxLength="200"
         />
-        <span className="popup__input-error input-about-error"></span>
       </PopupWithForm>
 
-      {/* Popup para añadir tarjeta */}
+      {/* Popup para añadir un lugar */}
       <PopupWithForm
         title="Nuevo lugar"
         name="add-place"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
-        onSubmit={handleAddPlaceSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          // Lógica para añadir lugar aquí
+          closeAllPopups();
+        }}
       >
         <input
           type="text"
-          className="popup__input popup__newplaces-input-name"
           name="title"
+          className="popup__input"
           placeholder="Título"
-          minLength="2"
-          maxLength="40"
           required
-          onChange={(e) => setTitle(e.target.value)}
+          minLength="2"
+          maxLength="30"
         />
-        <span className="popup__input-error input-title-error"></span>
         <input
           type="url"
-          className="popup__input popup__newplaces-input-about"
           name="image-url"
+          className="popup__input"
           placeholder="URL de la imagen"
           required
-          onChange={(e) => setImageUrl(e.target.value)}
         />
-        <span className="popup__input-error input-url-error"></span>
       </PopupWithForm>
 
-      {/* Popup de imagen */}
-      <ImagePopup
-        card={selectedCard}
+      {/* Popup para editar el avatar */}
+      <PopupWithForm
+        title="Actualizar avatar"
+        name="edit-avatar"
+        isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
-      />
+        onSubmit={(e) => {
+          e.preventDefault();
+          // Lógica para actualizar avatar aquí
+          closeAllPopups();
+        }}
+      >
+        <input
+          type="url"
+          name="avatar-url"
+          className="popup__input"
+          placeholder="URL del nuevo avatar"
+          required
+        />
+      </PopupWithForm>
+
+      {/* Popup para la imagen seleccionada */}
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   );
 }
