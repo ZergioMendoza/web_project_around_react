@@ -35,3 +35,4 @@ function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children }) {
 }
 
 export default PopupWithForm;
+

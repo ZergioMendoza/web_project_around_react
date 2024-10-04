@@ -1,8 +1,12 @@
+
+
+
 import { useState, useEffect } from 'react';
 import profileLogo from '../images/img-profile.jpg';
 import vector from '../images/Vector.svg';
 import api from '../utils/Api';
 import Card from './Card';
+// import EditProfilePopup from './EditProfilePopup';
 
 export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick, onCardClick }) { 
   const [userName, setUserName] = useState('');
@@ -29,6 +33,31 @@ export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatar
       })
       .catch((err) => console.error(`Error obteniendo tarjetas: ${err}`));
   }, []);
+
+  // Función para manejar el "like" de una tarjeta
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === 'currentUserId'); // Usa tu propio ID de usuario
+
+    // Llama a la API para actualizar el estado del "like"
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((prevState) =>
+          prevState.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => console.error(`Error actualizando el like de la tarjeta: ${err}`));
+  }
+
+  // Función para manejar la eliminación de una tarjeta
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(() => {
+        setCards((prevState) =>
+          prevState.filter((c) => c._id !== card._id)
+        );
+      })
+      .catch((err) => console.error(`Error eliminando la tarjeta: ${err}`));
+  }
 
   return (
     <main id="main">
@@ -58,9 +87,15 @@ export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatar
             key={card._id} // Usa _id si es lo que te da la API, verifica el nombre del campo
             card={card}
             onCardClick={onCardClick} 
+            onCardLike={handleCardLike}  // Pasamos el manejador de like
+            onCardDelete={handleCardDelete}  // Pasamos el manejador de eliminación
           />
         ))}
       </section>
     </main>
   );
 }
+
+
+ 
+

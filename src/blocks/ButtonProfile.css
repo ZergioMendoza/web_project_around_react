@@ -49,3 +49,22 @@
         height: 1.125rem;
       }
     }
+
+    .button {
+      background: transparent; /* Elimina el fondo del botón */
+      border: none; /* Elimina el borde del botón */
+      cursor: pointer; /* Cambia el cursor a puntero */
+      padding: 0; /* Elimina el padding del botón */
+      outline: none; /* Elimina el contorno al hacer clic */
+    }
+    
+    .card__like-icon,
+    .card__delete-icon {
+      width: 24px; /* Ajusta el tamaño del icono */
+      height: 24px; /* Ajusta el tamaño del icono */
+    }
+    
+    .card__like-icon_active {
+      fill: red; /* Cambia el color si está activo */
+    }
+    

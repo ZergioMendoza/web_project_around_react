@@ -1,20 +1,62 @@
-import React from 'react';
+// import React from 'react';
 
-function Card({ card, onCardClick }) {
+// function Card({ card, onCardClick }) {
+//   return (
+//     <div className="cards__card">
+//       <img
+//         src={card.link}
+//         alt={card.name}
+//         className="cards__image"
+//         onClick={() => onCardClick(card)} // Al hacer clic en la imagen, pasa la tarjeta
+//       />
+//       <div className="cards__menu">
+//         <h2 className="cards__title">{card.name}</h2>
+//         <p className="cards__like-count">{card.likes.length}</p>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Card;
+
+// Card.js
+import React, { useContext } from 'react';
+import CurrentUserContext from './Contexts/CurrentUserContext';
+
+export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+  const currentUser = useContext(CurrentUserContext);
+
+  const isOwn = card.owner._id === currentUser._id; // Verifica si el usuario actual es el propietario
+  const isLiked = card.likes.some(i => i._id === currentUser._id); // Verifica si el usuario actual le dio "like"
+
+  const cardDeleteButtonClassName = `cards__delete-icon ${isOwn ? 'cards__delete-icon_visible' : 'cards__delete-icon_hidden'}`;
+  const cardLikeButtonClassName = `cards__like-icon ${isLiked ? 'cards__like-color' : ''}`;
+
   return (
-    <div className="cards__card">
+    <article className="cards__card">
       <img
         src={card.link}
         alt={card.name}
         className="cards__image"
-        onClick={() => onCardClick(card)} // Al hacer clic en la imagen, pasa la tarjeta
+        onClick={() => onCardClick(card)} // Asegúrate de que se pase el card
+      />
+      <button
+        className={cardDeleteButtonClassName}
+        onClick={() => onCardDelete(card)}
+        aria-label="Delete card"
       />
       <div className="cards__menu">
         <h2 className="cards__title">{card.name}</h2>
-        <p className="cards__like-count">{card.likes.length}</p>
+        <div className="cards__like-container">
+          <button
+            className={cardLikeButtonClassName}
+            onClick={() => onCardLike(card)}
+            aria-label="Like card"
+          />
+          <span className="cards__like-count">{card.likes.length}</span>
+        </div>
       </div>
-    </div>
+    </article>
   );
 }
 
-export default Card;

@@ -31,25 +31,28 @@
   background-size: contain;
   transition: 0.4s ease-in-out;
   cursor: pointer;
+  border: none; /* Quita el borde */
+  background-color: transparent; /* Hace el fondo transparente */
+  padding: 0; /* Quita el relleno del botón */
 }
 
 .cards__like-color {
   background-image: url(../images/icon/like-button-active.svg); /* Cambia a la imagen del botón activado */
-  background-repeat: no-repeat;
-  background-size: contain;
 }
-
 
 .cards__delete-icon {
   background-image: url(../images/Trash.svg);
   width: 1.3rem;
-  position: absolute;
   height: 1.2rem;
   background-repeat: no-repeat;
   background-size: contain;
+  position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
+  border: none; /* Quita el borde */
+  background-color: transparent; /* Hace el fondo transparente */
+  padding: 0; /* Quita el relleno del botón */
   transition: 0.4s ease-in-out;
 }
 
