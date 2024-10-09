@@ -1,250 +1,101 @@
-
-// // export default App;
-// import React, { useState } from 'react';
-// import Header from './Header';
-// import Main from './Main';
-// import Footer from './Footer';
-// import PopupWithForm from './PopupWithForm';
-// import ImagePopup from './ImagePopup';
-
-// function App() {
-//   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-//   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-//   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-//   const [selectedCard, setSelectedCard] = useState(null);
-  
-//   // Estado de las tarjetas
-//   const [cards, setCards] = useState([
-//     { id: 1, name: 'Card 1', link: '/images/card1.jpg', likes: [] },
-//     { id: 2, name: 'Card 2', link: '/images/card2.jpg', likes: [] },
-//     // Añade más tarjetas según sea necesario
-//   ]);
-
-//   // Función para manejar el clic en la tarjeta
-//   function handleCardClick(card) {
-//     setSelectedCard(card); // Actualiza la tarjeta seleccionada
-//   }
-
-//   // Función para manejar los "likes" en las tarjetas
-//   function handleCardLike(card) {
-//     const isLiked = card.likes.includes('currentUserId'); // Simula el ID del usuario actual
-//     const updatedCards = cards.map((c) =>
-//       c.id === card.id
-//         ? {
-//             ...c,
-//             likes: isLiked
-//               ? c.likes.filter((id) => id !== 'currentUserId') // Elimina el "like"
-//               : [...c.likes, 'currentUserId'], // Añade el "like"
-//           }
-//         : c
-//     );
-//     setCards(updatedCards); // Actualiza el estado de las tarjetas
-//   }
-
-//   // Función para manejar la eliminación de una tarjeta
-//   function handleCardDelete(card) {
-//     const updatedCards = cards.filter((c) => c.id !== card.id); // Elimina la tarjeta del array
-//     setCards(updatedCards); // Actualiza el estado de las tarjetas
-//   }
-
-//   // Función para cerrar todos los popups
-//   function closeAllPopups() {
-//     setIsEditProfilePopupOpen(false);
-//     setIsAddPlacePopupOpen(false);
-//     setIsEditAvatarPopupOpen(false);
-//     setSelectedCard(null); // Cierra el popup de la imagen
-//   }
-
-//   return (
-//     <div className="page">
-//       <Header />
-//       <Main
-//         cards={cards} // Pasamos las tarjetas al componente Main
-//         onEditProfileClick={() => setIsEditProfilePopupOpen(true)}
-//         onAddPlaceClick={() => setIsAddPlacePopupOpen(true)}
-//         onEditAvatarClick={() => setIsEditAvatarPopupOpen(true)}
-//         onCardClick={handleCardClick} // Pasa la función handleCardClick a Main
-//         onCardLike={handleCardLike}  // Pasa la función handleCardLike a Main
-//         onCardDelete={handleCardDelete}  // Pasa la función handleCardDelete a Main
-//       />
-//       <Footer />
-
-//       {/* Popup para editar el perfil */}
-//       <PopupWithForm
-//         title="Editar perfil"
-//         name="edit-profile"
-//         isOpen={isEditProfilePopupOpen}
-//         onClose={closeAllPopups}
-//         onSubmit={(e) => {
-//           e.preventDefault();
-//           // Lógica para editar perfil aquí
-//           closeAllPopups();
-//         }}
-//       >
-//         <input
-//           type="text"
-//           name="name"
-//           className="popup__input"
-//           placeholder="Nombre"
-//           required
-//           minLength="2"
-//           maxLength="40"
-//         />
-//         <input
-//           type="text"
-//           name="about"
-//           className="popup__input"
-//           placeholder="Sobre mí"
-//           required
-//           minLength="2"
-//           maxLength="200"
-//         />
-//       </PopupWithForm>
-
-//       {/* Popup para añadir un lugar */}
-//       <PopupWithForm
-//         title="Nuevo lugar"
-//         name="add-place"
-//         isOpen={isAddPlacePopupOpen}
-//         onClose={closeAllPopups}
-//         onSubmit={(e) => {
-//           e.preventDefault();
-//           // Lógica para añadir lugar aquí
-//           closeAllPopups();
-//         }}
-//       >
-//         <input
-//           type="text"
-//           name="title"
-//           className="popup__input"
-//           placeholder="Título"
-//           required
-//           minLength="2"
-//           maxLength="30"
-//         />
-//         <input
-//           type="url"
-//           name="image-url"
-//           className="popup__input"
-//           placeholder="URL de la imagen"
-//           required
-//         />
-//       </PopupWithForm>
-
-//       {/* Popup para editar el avatar */}
-//       <PopupWithForm
-//         title="Actualizar avatar"
-//         name="edit-avatar"
-//         isOpen={isEditAvatarPopupOpen}
-//         onClose={closeAllPopups}
-//         onSubmit={(e) => {
-//           e.preventDefault();
-//           // Lógica para actualizar avatar aquí
-//           closeAllPopups();
-//         }}
-//       >
-//         <input
-//           type="url"
-//           name="avatar-url"
-//           className="popup__input"
-//           placeholder="URL del nuevo avatar"
-//           required
-//         />
-//       </PopupWithForm>
-
-//       {/* Popup para la imagen seleccionada */}
-//       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-//     </div>
-//   );
-// }
-
-// export default App;
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import api from '../utils/Api'; // Importamos la instancia de la API
-import CurrentUserContext from './Contexts/CurrentUserContext'; // Asegúrate de que la ruta sea correcta
+import api from '../utils/Api';
+import CurrentUserContext from './Contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup'; // Asegúrate de importar el nuevo componente
+import AddPlacePopup from './AddPlacePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  
-  // Aquí creamos el estado de currentUser y cards
+  const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [cards, setCards] = useState([]); // Estado para las tarjetas
+  const [cards, setCards] = useState([]);
 
-  // Llamar a la API para obtener la información del usuario y las tarjetas cuando se monta el componente
+  // Efecto para obtener los datos de usuario y tarjetas al cargar el componente
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
       .then(([userData, cardData]) => {
-        setCurrentUser(userData); // Actualiza el estado con los datos del usuario
-        setCards(cardData); // Actualiza el estado con los datos de las tarjetas
+        setCurrentUser(userData);
+        setCards(cardData);
       })
       .catch(err => console.error(`Error obteniendo los datos: ${err}`));
   }, []);
 
+  // Controlador para abrir los popups
   function handleCardClick(card) {
-    setSelectedCard(card); 
+    setSelectedCard(card);
   }
 
+  // Función para cerrar todos los popups
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(null); 
+    setSelectedCard(null);
   }
 
+  // Función para actualizar los datos del usuario
   function handleUpdateUser(data) {
+    setIsLoading(true);
     api.updateUserInfo(data)
       .then(updatedUser => {
         setCurrentUser(updatedUser);
-        closeAllPopups();
+        closeAllPopups(); // Cerrar el popup después de la actualización
       })
-      .catch(err => console.error(`Error actualizando los datos del usuario: ${err}`));
+      .catch(err => console.error(`Error actualizando los datos del usuario: ${err}`))
+      .finally(() => setIsLoading(false));
   }
 
+  // Función para actualizar el avatar del usuario
   function handleUpdateAvatar({ avatar }) {
+    setIsLoading(true);
     api.updateAvatar(avatar)
       .then(updatedUser => {
         setCurrentUser(updatedUser);
-        closeAllPopups();
+        closeAllPopups(); // Cerrar el popup después de la actualización
       })
-      .catch(err => console.error(`Error actualizando el avatar: ${err}`));
+      .catch(err => console.error(`Error actualizando el avatar: ${err}`))
+      .finally(() => setIsLoading(false));
   }
 
+  // Función para dar y quitar like a las tarjetas
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-
     api.changeLikeCardStatus(card._id, !isLiked)
       .then(newCard => {
-        setCards(cards.map(c => (c._id === card._id ? newCard : c))); // Actualiza la tarjeta
+        setCards(cards.map(c => (c._id === card._id ? newCard : c)));
       })
       .catch(err => console.error(`Error dando like a la tarjeta: ${err}`));
   }
 
+  // Función para eliminar una tarjeta
   function handleCardDelete(card) {
     api.deleteCard(card._id)
       .then(() => {
-        setCards(cards.filter(c => c._id !== card._id)); // Elimina la tarjeta de la lista
+        setCards(cards.filter(c => c._id !== card._id));
       })
       .catch(err => console.error(`Error eliminando la tarjeta: ${err}`));
   }
 
+  // Función para agregar una nueva tarjeta
   function handleAddPlaceSubmit({ name, link }) {
+    setIsLoading(true); // Indicador de carga mientras se realiza la solicitud API
     api.addCard({ name, link })
       .then(newCard => {
-        setCards([newCard, ...cards]); // Agrega la nueva tarjeta al principio de la lista
-        closeAllPopups();
+        // Actualiza el estado de las tarjetas agregando la nueva tarjeta al inicio del array
+        setCards([newCard, ...cards]);
+        closeAllPopups(); // Cierra el popup después de agregar la tarjeta
       })
-      .catch(err => console.error(`Error añadiendo la tarjeta: ${err}`));
+      .catch(err => console.error(`Error añadiendo la tarjeta: ${err}`))
+      .finally(() => setIsLoading(false)); // Restablece el estado de carga
   }
 
   return (
@@ -252,29 +103,32 @@ function App() {
       <div className="page">
         <Header />
         <Main
-          cards={cards} // Pasa las tarjetas a Main
+          cards={cards} // Pasar las tarjetas al componente Main
           onEditProfileClick={() => setIsEditProfilePopupOpen(true)}
           onAddPlaceClick={() => setIsAddPlacePopupOpen(true)}
           onEditAvatarClick={() => setIsEditAvatarPopupOpen(true)}
           onCardClick={handleCardClick}
-          onCardLike={handleCardLike} // Pasa el manejador de like
-          onCardDelete={handleCardDelete} // Pasa el manejador de eliminación
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
-        <EditProfilePopup 
-          isOpen={isEditProfilePopupOpen} 
-          onClose={closeAllPopups} 
-          onUpdateUser={handleUpdateUser} 
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
-        <EditAvatarPopup 
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar} 
+          onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
-        <AddPlacePopup 
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit} // Pasa el manejador para añadir tarjeta
+          onAddPlace={handleAddPlaceSubmit}
+          isLoading={isLoading}
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>

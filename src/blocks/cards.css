@@ -79,9 +79,10 @@
 }
 
 .cards__like-count {
-  font-size: 1rem;
+  font-size: 1.25rem; /* Tamaño más grande */
+  font-weight: bold;  /* Negrita */
   margin-left: 10px;
-  color: #cf0000;
+  color: #2600fb;
 }
 
 @media screen and (max-width: 992px) {

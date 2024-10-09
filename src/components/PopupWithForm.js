@@ -1,6 +1,9 @@
+
+
+
 import React, { useEffect } from 'react';
 
-function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children }) {
+function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children, buttonText }) {
   useEffect(() => {
     const handleEscKey = (event) => {
       if (event.key === 'Escape') {
@@ -27,7 +30,7 @@ function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children }) {
         <button className="popup__close" type="button" onClick={onClose}></button>
         <form className="popup__form" name={name} onSubmit={onSubmit}>
           {children}
-          <button type="submit" className="popup__submit">Guardar</button>
+          <button type="submit" className="popup__submit">{buttonText}</button>
         </form>
       </div>
     </div>
@@ -35,4 +38,3 @@ function PopupWithForm({ title, name, isOpen, onClose, onSubmit, children }) {
 }
 
 export default PopupWithForm;
-

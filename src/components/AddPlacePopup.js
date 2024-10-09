@@ -1,45 +1,55 @@
+
 import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-  const [name, setName] = useState(''); // Asegúrate de que name tenga un valor inicial
-  const [link, setLink] = useState(''); // Asegúrate de que link tenga un valor inicial
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
+  const [name, setName] = useState('');
+  const [link, setLink] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddPlace({ name, link }); // Pasa los datos de la nueva tarjeta
+    onAddPlace({
+      name,
+      link
+    });
+    setName(''); // Limpiar el input
+    setLink(''); // Limpiar el input
   }
 
   return (
     <PopupWithForm
-      title="Nueva tarjeta"
+      title="Nuevo lugar"
       name="add-place"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText={isLoading ? "Guardando..." : "Crear"}
     >
       <input
         type="text"
         name="name"
-        className="popup__input"
-        placeholder="Nombre"
-        required
+        placeholder="Título"
+        className="popup__input popup__input_type_place-title"
         minLength="2"
         maxLength="30"
+        required
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
+      <span className="popup__input-error place-title-input-error"></span>
       <input
         type="url"
         name="link"
-        className="popup__input"
-        placeholder="URL de la imagen"
+        placeholder="Enlace a la imagen"
+        className="popup__input popup__input_type_place-link"
         required
         value={link}
         onChange={(e) => setLink(e.target.value)}
       />
+      <span className="popup__input-error place-link-input-error"></span>
     </PopupWithForm>
   );
 }
 
 export default AddPlacePopup;
+  

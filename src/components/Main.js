@@ -1,63 +1,36 @@
 
 
-
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import profileLogo from '../images/img-profile.jpg';
 import vector from '../images/Vector.svg';
 import api from '../utils/Api';
 import Card from './Card';
-// import EditProfilePopup from './EditProfilePopup';
+import CurrentUserContext from './Contexts/CurrentUserContext';
 
-export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatarClick, onCardClick }) { 
+export default function Main({ 
+  onEditProfileClick, 
+  onAddPlaceClick, 
+  onEditAvatarClick, 
+  onCardClick, 
+  onCardLike, 
+  onCardDelete, 
+  cards 
+}) {
+  // Obtén el usuario actual del contexto
+  const currentUser = useContext(CurrentUserContext);
+
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState(profileLogo);
-  const [cards, setCards] = useState([]); 
 
-  // Cargar la información del usuario al montar el componente
+  // Efecto para sincronizar la información del usuario del contexto con los estados locales
   useEffect(() => {
-    api.getUserInfo()
-      .then((userData) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-      })
-      .catch((err) => console.error(`Error obteniendo datos del usuario: ${err}`));
-  }, []);
-
-  // Cargar las tarjetas al montar el componente
-  useEffect(() => {
-    api.getCards()
-      .then((cardsData) => {
-        setCards(cardsData);
-      })
-      .catch((err) => console.error(`Error obteniendo tarjetas: ${err}`));
-  }, []);
-
-  // Función para manejar el "like" de una tarjeta
-  function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === 'currentUserId'); // Usa tu propio ID de usuario
-
-    // Llama a la API para actualizar el estado del "like"
-    api.changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((prevState) =>
-          prevState.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
-      .catch((err) => console.error(`Error actualizando el like de la tarjeta: ${err}`));
-  }
-
-  // Función para manejar la eliminación de una tarjeta
-  function handleCardDelete(card) {
-    api.deleteCard(card._id)
-      .then(() => {
-        setCards((prevState) =>
-          prevState.filter((c) => c._id !== card._id)
-        );
-      })
-      .catch((err) => console.error(`Error eliminando la tarjeta: ${err}`));
-  }
+    if (currentUser) {
+      setUserName(currentUser.name);
+      setUserDescription(currentUser.about);
+      setUserAvatar(currentUser.avatar || profileLogo);
+    }
+  }, [currentUser]);
 
   return (
     <main id="main">
@@ -84,18 +57,14 @@ export default function Main({ onEditProfileClick, onAddPlaceClick, onEditAvatar
       <section className="cards">
         {cards.map((card) => (
           <Card
-            key={card._id} // Usa _id si es lo que te da la API, verifica el nombre del campo
+            key={card._id}
             card={card}
-            onCardClick={onCardClick} 
-            onCardLike={handleCardLike}  // Pasamos el manejador de like
-            onCardDelete={handleCardDelete}  // Pasamos el manejador de eliminación
+            onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
           />
         ))}
       </section>
     </main>
   );
 }
-
-
- 
-

@@ -1,22 +1,26 @@
-import React, { useEffect, useRef } from 'react';
-import PopupWithForm from './PopupWithForm';
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-  const nameRef = useRef('');
-  const aboutRef = useRef('');
+
+import React, { useState, useContext, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
+import CurrentUserContext from './Contexts/CurrentUserContext';
+
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
+  const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
-    if (isOpen) {
-      nameRef.current.value = ''; // Limpia el input al abrir
-      aboutRef.current.value = ''; // Limpia el input al abrir
+    if (currentUser) {
+      setName(currentUser.name || '');
+      setDescription(currentUser.about || '');
     }
-  }, [isOpen]);
+  }, [currentUser, isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser({
-      name: nameRef.current.value,
-      about: aboutRef.current.value,
+      name,
+      about: description
     });
   }
 
@@ -27,30 +31,34 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText={isLoading ? "Guardando..." : "Guardar"}
     >
       <input
         type="text"
         name="name"
-        className="popup__input"
         placeholder="Nombre"
-        required
+        className="popup__input popup__input_type_name"
         minLength="2"
         maxLength="40"
-        ref={nameRef}
+        required
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
+      <span className="popup__input-error name-input-error"></span>
       <input
         type="text"
         name="about"
-        className="popup__input"
-        placeholder="Acerca de mí"
-        required
+        placeholder="Acerca de"
+        className="popup__input popup__input_type_about"
         minLength="2"
         maxLength="200"
-        ref={aboutRef}
+        required
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
       />
+      <span className="popup__input-error about-input-error"></span>
     </PopupWithForm>
   );
 }
 
 export default EditProfilePopup;
-
